@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 import { Injectable } from '@nestjs/common';
 import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';

@@ -10,7 +10,7 @@ services:
       dockerfile: ./Dockerfile
     command: npm run start:debug
     ports:
-      - "3060:3060"
+      - "3060:3000"
       - "9230:9229"
     networks:
       - default
@@ -28,7 +28,7 @@ services:
       dockerfile: ./Dockerfile
     command: npm run start:prod
     ports:
-      - "3060:3060"
+      - "3060:3000"
       - "9229:9229"
     networks:
       - default
