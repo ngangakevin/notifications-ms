@@ -1,25 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-import { Injectable } from '@nestjs/common';
-import { ClientOptions, ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
-
-const clientOptions : ClientOptions = {
-    transport: Transport.REDIS,
-    options: {
-      port: parseInt(process.env.REDIS_PORT),
-      host: process.env.REDIS_HOST,
-      retryAttempts: parseInt(process.env.REDIS_CONNECTION_RETRY),
-      retryDelay: parseInt(process.env.REDIS_CONNECTION_RETRY_BACKOFF)
-    }
-}
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
-export class AppService{
-  private readonly transactionsClient: ClientProxy;
-
-  constructor() {
-    this.transactionsClient = ClientProxyFactory.create(clientOptions);
-  }
+export class AppService {
+  constructor(
+    @Inject('NOTIFICATIONS_SERVICE') private transactionsClient: ClientProxy,
+  ) {}
 
   getTransaction(transId: string) {
     return this.transactionsClient.send('get_transaction', transId);
